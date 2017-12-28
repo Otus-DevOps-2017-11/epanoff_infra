@@ -1,3 +1,7 @@
+# Homework 7
+
+Создание fry, bakes образов при помощи packer. 
+
 # Homework 6
 
 
