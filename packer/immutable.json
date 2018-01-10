@@ -19,7 +19,6 @@
     "disk_size": "10",
     "tags": "puma-server",
     "network": "default",
-    "startup_script_file": "scripts/deploy.sh"
     }
   ],
   "provisioners": [
