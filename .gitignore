@@ -4,4 +4,5 @@
 *.tfvars
 .terraform/
 .idea/
+variables.json
 *.swp
