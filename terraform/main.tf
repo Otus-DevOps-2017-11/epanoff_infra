@@ -6,7 +6,7 @@ provider "google" {
 
 resource "google_compute_project_metadata" "default" {
   metadata {
-    ssh-keys  = "appuser1:ssh-rsa ${var.public_key} appuser1 \nappuser2:ssh-rsa ${var.public_key} appuser2"
+    ssh-keys = "appuser1:${file(var.public_key_path)}\nappuser2:${file(var.public_key_path)}"
   }
 }
 
@@ -22,6 +22,13 @@ resource "google_compute_instance" "app" {
     initialize_params {
       image = "${var.disk_image}"
     }
+  }
+
+  network_interface {
+       network       = "default"
+       access_config = {
+         nat_ip = "${google_compute_address.app_ip.*.address}"
+       }
   }
 
   metadata {
@@ -73,7 +80,24 @@ resource "google_compute_firewall" "firewall_puma" {
   target_tags = ["reddit-app"]
 }
 
-# Второе задание со звездочкой
+resource "google_compute_firewall" "firewall_ssh" {
+  name    = "default-allow-ssh"
+  network = "default"
+  description = "Allow ssh from everywhere terraform-2"
+  allow {
+    protocol = "tcp"
+    ports    = ["22"]
+  }
+
+  source_ranges = ["0.0.0.0/0"]
+}
+
+resource "google_compute_address" "app_ip" {
+             name = "reddit-app-ip"
+             count        = 2
+}
+
+# Второе задание со звездочкой terraform-1
 
 resource "google_compute_instance_group" "reddit-app" {
   name        = "reddit-app-group"
@@ -90,7 +114,6 @@ resource "google_compute_instance_group" "reddit-app" {
 
   zone = "${var.zone}"
 }
-
 
 resource "google_compute_global_forwarding_rule" "http" {
   project    = "${var.project}"
@@ -120,16 +143,19 @@ resource "google_compute_url_map" "default" {
 }
 
 resource "google_compute_backend_service" "default" {
-  project       = "${var.project}"
-  name          = "${var.name}-backend-${count.index}"
-  port_name     = "http"
-  protocol      = "HTTP"
-  timeout_sec   = 10
+  project          = "${var.project}"
+  name             = "${var.name}-backend-${count.index}"
+  port_name        = "http"
+  protocol         = "HTTP"
+  timeout_sec      = 10
   session_affinity = "CLIENT_IP"
+
   backend {
     group = "${google_compute_instance_group.reddit-app.self_link}"
   }
+
   health_checks = ["${element(google_compute_http_health_check.default.*.self_link, count.index)}"]
+
   #health_checks = ["$google_compute_http_health_check.default.self_link"]
 }
 
@@ -139,4 +165,3 @@ resource "google_compute_http_health_check" "default" {
   request_path = "/"
   port         = "9292"
 }
-

@@ -1,3 +1,11 @@
+# Homework 9
+
+Добавил resource "google_compute_firewall" "firewall_ssh"
+Импортивал google_compute_firewall.firewall_ssh default-allow-ssh
+
+
+
+
 # Homework 8
 
 Практика IaC с использованием Terraform

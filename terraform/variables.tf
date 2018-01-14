@@ -24,11 +24,6 @@ variable private_key_path {
   description = "Path to the private key used for provisoners  ssh access"
 }
 
-
-variable public_key {
-	description = "the public key used for ssh access"
-}
-
 variable name {
   description = "Name for the forwarding rule and prefix for supporting resources"
   default     = "epanoff-infra"
