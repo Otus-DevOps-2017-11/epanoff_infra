@@ -1,2 +1,9 @@
+*.tfstate
+*.tfstate.*.backup
+*.tfstate.backup
+*.tfvars
+.terraform
+.idea/
 variables.json
 *.swp
+variables.json
