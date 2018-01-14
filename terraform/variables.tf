@@ -24,10 +24,6 @@ variable private_key_path {
   description = "Path to the private key used for provisoners  ssh access"
 }
 
-variable google_compute_instance_zone {
-  description = "zone for google_compute_instance_zone app"
-  default     = "europe-west1-b"
-}
 
 variable public_key {
 	description = "the public key used for ssh access"
