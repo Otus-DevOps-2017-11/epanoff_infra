@@ -14,7 +14,7 @@ variable zone {
 
 variable machine_type {
   description = "machine_type"
-  default = "g1-small"
+  default     = "g1-small"
 }
 
 variable private_key_path {
