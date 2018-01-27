@@ -1,0 +1,1 @@
+{ "reddit-app":{"hosts":{ "reddit-app" :{"ansible_host":"104.155.102.45"}}},"reddit-db":{"hosts":{ "reddit-db" :{"ansible_host":"35.189.220.243"}}} }
