@@ -18,6 +18,7 @@ Error loading state: writing "gs://infra-189214/terraform.tflock" failed
 Добавил провижионер для app. Для бд не нужно там и так mongodb в автозагрузке
 Но понять почему puma не видит БД так и не смог. Наверное что-то упустил.  
 
+UPDATED: теперь все видит - все работает
 # Homework 8
 
 Практика IaC с использованием Terraform
