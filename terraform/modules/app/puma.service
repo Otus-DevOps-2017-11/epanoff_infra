@@ -18,6 +18,7 @@ WorkingDirectory=/home/appuser/reddit
 
 # Helpful for debugging socket activation, etc.
 # Environment=PUMA_DEBUG=1
+Environment="DATABASE_URL=${database_url}"
 
 # The command to start Puma. This variant uses a binstub generated via
 # `bundle binstubs puma --path ./sbin` in the WorkingDirectory

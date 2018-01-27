@@ -1,3 +1,12 @@
+data "template_file" "puma_unitfile" {
+  template = "${file("${path.module}/puma.service")}"
+
+  vars {
+    database_url = "${var.db_address}"
+  }
+}
+
+
 resource "google_compute_instance" "app" {
   name         = "reddit-app"
   machine_type = "${var.machine_type}"
@@ -30,21 +39,12 @@ resource "google_compute_instance" "app" {
   }
 
   provisioner "file" {
-    source      = "${path.module}/puma.service"
+    content     = "${data.template_file.puma_unitfile.rendered}"
     destination = "/tmp/puma.service"
   }
 
-  provisioner "file" {
-    source      = "${path.module}/deploy.sh"
-    destination = "/tmp/deploy.sh"
-  }
-
   provisioner "remote-exec" {
-    inline = [
-      "export DATABASE_URL=${var.db_address}",
-      "chmod +x /tmp/deploy.sh",
-      "sudo /tmp/deploy.sh",
-    ]
+    script = "${path.module}/deploy.sh"
   }
 }
 
