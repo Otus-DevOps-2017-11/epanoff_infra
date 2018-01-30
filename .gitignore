@@ -7,3 +7,4 @@
 variables.json
 *.swp
 variables.json
+*.retry
