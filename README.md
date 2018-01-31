@@ -1,3 +1,16 @@
+# Homework 10
+Установил ansible. Создал inventory в разныъ форматах ini, yuml
+Позапускал разные модули ping, shell, command
+
+# *
+Не знай зачем запретили использовать gce.py. Свой аналог писать не хотелось
+поэтому наговнокодил write-only script
+
+echo `echo "{";gcloud compute instances list  | grep -v "STATUS"| awk '{printf "\"%s\"\:\{\"hosts\"\:{ \"%s\" :{\"ansible_host\":\"%s\"}}},", $1, $1, $5 }'| sed s'/.$//';echo "}"`  > inventory.json
+
+Он рабочий. Проверено. Но я бы лучше использовал gce.py чем это поделие. 
+
+
 # Homework 9
 
 Добавил resource "google_compute_firewall" "firewall_ssh"
