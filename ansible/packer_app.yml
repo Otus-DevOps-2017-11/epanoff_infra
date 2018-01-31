@@ -1,0 +1,13 @@
+---
+- name: install_ruby
+  hosts: all
+  become: true
+  vars:
+   db_host: 10.132.0.2
+  tasks:
+    - name: Add unit file for Puma
+      apt: "name={{ item }} state=present"
+      with_items:
+       - ruby-full
+       - ruby-bundler
+       - build-essential
