@@ -17,10 +17,10 @@ install:
   - cp packer/variables.json.example packer/variables.json
 
 script:
-  - packer validate packer/app.json
-  - packer validate packer/db.json
-  - packer validate packer/immutable.json
-  - packer validate packer/ubuntu16.json
+  - packer validate -var-file=packer/variables.json packer/app.json
+  - packer validate -var-file=packer/variables.json packer/db.json
+  - packer validate -var-file=packer/variables.json packer/immutable.json
+  - packer validate -var-file=packer/variables.json packer/ubuntu16.json
   - terraform validate terraform/prod/
   - terraform validate terraform/stage/
   - tflint terraform/prod/main.tf
