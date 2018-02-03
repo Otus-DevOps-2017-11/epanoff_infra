@@ -1,4 +1,27 @@
 [![Build Status](https://travis-ci.org/Otus-DevOps-2017-11/epanoff_infra.svg?branch=master)](https://travis-ci.org/Otus-DevOps-2017-11/epanoff_infra)
+#Homework 13
+ansible
+
+* Создан Vagrantfile
+* Добавлен base.yml
+* Доработаны роли app и db
+* Конфигурация проверена
+* nginx под вагрантом настроил при помощи
+      ansible.extra_vars = {
+        "deploy_user" => "ubuntu",
+        "nginx_sites" => { "default": ["listen 80", "server_name \"reddit\"", "location / { proxy_pass http://127.0.0.1:9292; }"]}
+        }
+    end
+* Добавлено тестирование db
+* В пакеры вместо плейбуков роли с тегами
+
+#*
+* Вынес db в https://github.com/epanoff/infra-db-ansible
+* Добавил travis-ci (часов пять ушло)
+* Настроил оповещения по аналогии с 4 заданием
+
+
+
 # Homework 12
 ansible
 

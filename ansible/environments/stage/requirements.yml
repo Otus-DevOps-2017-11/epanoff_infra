@@ -1,3 +1,7 @@
 ---
 - src: jdauphant.nginx
   version: v2.13
+
+- src: https://github.com/bennojoy/nginx
+  version: master
+  name: nginx_role
