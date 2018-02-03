@@ -5,8 +5,8 @@ install:
   - sudo unzip terraform.zip -d /opt/terraform
   - sudo ln -s /opt/terraform/terraform /usr/bin/terraform
   - rm -f terraform.zip
-  - wget https://github.com/wata727/tflint/releases/download/v0.5.4/tflint_darwin_amd64.zip
-  - unzip tflint_darwin_amd64.zip
+  - wget https://github.com/wata727/tflint/releases/download/v0.5.4/tflint_linux_amd64.zip
+  - unzip tflint_linux_amd64.zip
   - sudo mkdir -p /usr/local/tflint/bin
   - export PATH=/usr/local/tflint/bin:$PATH
   - sudo install tflint /usr/local/tflint/bin
@@ -17,6 +17,7 @@ install:
   - cp packer/variables.json.example packer/variables.json
   - cp terraform/prod/terraform.tfvars.example terraform/prod/terraform.tfvars
   - cp terraform/prod/terraform.tfvars.example terraform/stage/terraform.tfvars
+  - touch /home/travis/.ssh/projectuser.pub
 
 script:
   - packer validate -var-file=packer/variables.json packer/app.json
