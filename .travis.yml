@@ -9,7 +9,7 @@ install:
   - unzip tflint_darwin_amd64.zip
   - sudo mkdir -p /usr/local/tflint/bin
   - export PATH=/usr/local/tflint/bin:$PATH
-  - install tflint /usr/local/tflint/bin
+  - sudo install tflint /usr/local/tflint/bin
   - curl -fSL "https://releases.hashicorp.com/packer/1.1.3/packer_1.1.3_linux_amd64.zip -o packer.zip
   - sudo unzip packer.zip -d /opt/packer
   - sudo ln -s /opt/packer/packer /usr/bin/packer
