@@ -21,8 +21,10 @@ script:
   - packer validate -var-file=packer/variables.json packer/db.json
   - packer validate -var-file=packer/variables.json packer/immutable.json
   - packer validate -var-file=packer/variables.json packer/ubuntu16.json
-  - terraform validate terraform/prod/
-  - terraform validate terraform/stage/
+  - terrafrom init  -backend=false terraform/prod/
+  - terraform validate -var-file=terraform/prod/terraform.tfvars terraform/prod/
+  - terrafrom init  -backend=false terraform/prod/
+  - terraform validate -var-file=terraform/prod/terraform.tfvars terraform/stage/
   - tflint terraform/prod/main.tf
   - tflint terraform/stage/main.tf
   - ansible-lint ansible/playbooks/app.yml
