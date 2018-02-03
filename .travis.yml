@@ -1,0 +1,31 @@
+language: bash
+sudo: required
+install:
+  - curl -fSL "https://releases.hashicorp.com/terraform/0.11.3/terraform_0.11.3_linux_amd64.zip" -o terraform.zip
+  - sudo unzip terraform.zip -d /opt/terraform
+  - sudo ln -s /opt/terraform/terraform /usr/bin/terraform
+  - rm -f terraform.zip
+  - wget https://github.com/wata727/tflint/releases/download/v0.5.4/tflint_darwin_amd64.zip
+  - unzip tflint_darwin_amd64.zip
+  - mkdir -p /usr/local/tflint/bin
+  - export PATH=/usr/local/tflint/bin:$PATH
+  - install tflint /usr/local/tflint/bin
+  - curl -fSL "https://releases.hashicorp.com/packer/1.1.3/packer_1.1.3_linux_amd64.zip -o packer.zip
+  - sudo unzip packer.zip -d /opt/packer
+  - sudo ln -s /opt/packer/packer /usr/bin/packer
+  - sudo pip install ansible-lint
+  - cp packer/variables.json.example packer/variables.json
+
+script:
+  - packer validate packer/app.json
+  - packer validate packer/db.json
+  - packer validate packer/immutable.json
+  - packer validate packer/ubuntu16.json
+  - terraform validate terraform/prod/
+  - terraform validate terraform/stage/
+  - tflint terraform/prod/main.tf
+  - tflint terraform/stage/main.tf
+  - ansible-lint ansible/playbooks/app.yml
+  - ansible-lint ansible/playbooks/db.yml
+  - ansible-lint ansible/playbooks/site.yml
+  - ansible-lint ansible/playbooks/deploy.yml

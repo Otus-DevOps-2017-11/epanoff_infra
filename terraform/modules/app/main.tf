@@ -8,7 +8,7 @@ data "template_file" "puma_unitfile" {
 
 
 resource "google_compute_instance" "app" {
-  name         = "reddit-app"
+  name         = "app"
   machine_type = "${var.machine_type}"
   zone         = "${var.zone}"
   tags         = ["reddit-app"]
@@ -58,7 +58,7 @@ resource "google_compute_firewall" "firewall_puma" {
 
   allow {
     protocol = "tcp"
-    ports    = ["9292"]
+    ports    = ["9292", "80"]
   }
 
   source_ranges = ["0.0.0.0/0"]
