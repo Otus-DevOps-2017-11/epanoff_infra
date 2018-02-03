@@ -1,0 +1,7 @@
+project = "project"
+
+public_key_path = "~/.ssh/projectuser.pub"
+
+private_key_path = "~/.ssh/projectuser"
+
+disk_image = "disk_imag"
