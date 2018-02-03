@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/Otus-DevOps-2017-11/epanoff_infra.svg?branch=master)](https://travis-ci.org/Otus-DevOps-2017-11/epanoff_infra)
 # Homework 12
 ansible
 
@@ -10,13 +11,24 @@ ansible
 На каждом этапе проверял работу полным перезапуском окружения.
 
 #*
-На в задании 11 изучил gce.py. В этом изменил в ansible.cfg строчку
+В задании 11 изучил gce.py. В этом изменил в ansible.cfg строчку
  inventory = ./old/gce.py
 Плюс измененил названия в terrarome - вместо reddit-app => app чтоб матчились названия
 
-#*
+#**
+Создал .travis.yml файл с проверками. 
+Не смог решить проблему с tflint
 
+Он показывает ошибку
+epanov:epanoff_infra epanov$ tflint --var-file=terraform/prod/terraform.tfvars terraform/prod/main.tf
+Evaluation error: 1:3: unknown variable accessed: var.private_key_path in terraform/prod/main.tf:19
 
+Хотя эта переменная есть.
+epanov:epanoff_infra epanov$ grep private_key_path terraform/prod/terraform.tfvars
+private_key_path = "~/.ssh/appuser"
+epanov:epanoff_infra epanov$
+
+Поэтому билды падают. 
 
 # Homework 11
 
