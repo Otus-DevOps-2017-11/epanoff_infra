@@ -27,3 +27,5 @@ pyvenv.cfg
 pip-selfcheck.json
 share
 *.log
+.yamllint
+.pytest_cache
