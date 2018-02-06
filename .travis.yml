@@ -18,6 +18,7 @@ install:
   - cp terraform/prod/terraform.tfvars.example terraform/prod/terraform.tfvars
   - cp terraform/prod/terraform.tfvars.example terraform/stage/terraform.tfvars
   - touch /home/travis/.ssh/projectuser.pub
+  - touch /home/travis/.ssh/projectuser
 
 script:
   - packer validate -var-file=packer/variables.json packer/app.json
