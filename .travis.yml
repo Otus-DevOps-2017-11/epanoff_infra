@@ -18,6 +18,7 @@ install:
   - cp terraform/prod/terraform.tfvars.example terraform/prod/terraform.tfvars
   - cp terraform/prod/terraform.tfvars.example terraform/stage/terraform.tfvars
   - touch /home/travis/.ssh/projectuser.pub
+  - touch /home/travis/.ssh/projectuser
 
 script:
   - packer validate -var-file=packer/variables.json packer/app.json
@@ -26,11 +27,8 @@ script:
   - packer validate -var-file=packer/variables.json packer/ubuntu16.json
   - terraform init  -backend=false terraform/prod/
   - terraform validate -var-file=terraform/prod/terraform.tfvars terraform/prod/
-  - terraform init  -backend=false terraform/prod/
-  - terraform validate -var-file=terraform/prod/terraform.tfvars terraform/stage/
-  - tflint --var-file=terraform/prod/terraform.tfvars terraform/prod/main.tf
-  - tflint --var-file=terraform/stage/terraform.tfvars  terraform/stage/main.tf
-  - ansible-lint ansible/playbooks/app.yml
-  - ansible-lint ansible/playbooks/db.yml
+  - terraform init  -backend=false terraform/stage/
+  - terraform validate -var-file=terraform/stage/terraform.tfvars terraform/stage/
+  - tflint --var-file=terraform/prod/terraform.tfvars  terraform/prod/*
+  - tflint --var-file=terraform/stage/terraform.tfvars  terraform/stage/*
   - ansible-lint ansible/playbooks/site.yml
-  - ansible-lint ansible/playbooks/deploy.yml

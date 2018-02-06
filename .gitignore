@@ -10,14 +10,11 @@ variables.json
 *.retry
 *.pyc
 jdauphant.nginx
-# Vagrant & molecule
 .vagrant/
 *.log
 *.pyc
 .molecule
 .cache
-# Virtualenv
-# http://iamzed.com/2009/05/07/a-primer-on-virtualenv/
 .Python
 [Bb]in
 [Ii]nclude
@@ -29,3 +26,4 @@ pyvenv.cfg
 .venv
 pip-selfcheck.json
 share
+*.log
