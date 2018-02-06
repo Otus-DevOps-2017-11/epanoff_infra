@@ -26,11 +26,8 @@ script:
   - packer validate -var-file=packer/variables.json packer/ubuntu16.json
   - terraform init  -backend=false terraform/prod/
   - terraform validate -var-file=terraform/prod/terraform.tfvars terraform/prod/
-  - terraform init  -backend=false terraform/prod/
-  - terraform validate -var-file=terraform/prod/terraform.tfvars terraform/stage/
-  - tflint --var-file=terraform/prod/terraform.tfvars terraform/prod/main.tf
-  - tflint --var-file=terraform/stage/terraform.tfvars  terraform/stage/main.tf
-  - ansible-lint ansible/playbooks/app.yml
-  - ansible-lint ansible/playbooks/db.yml
+  - terraform init  -backend=false terraform/stage/
+  - terraform validate -var-file=terraform/stage/terraform.tfvars terraform/stage/
+  - tflint --var-file=terraform/prod/terraform.tfvars  terraform/prod/variables.tf  terraform/prod/main.tf terraform/prod/outputs.tf terraform/prod/backend.tf  terraform/prod/terraform.tfvars
+  - tflint --var-file=terraform/stage/terraform.tfvars  terraform/stage/variables.tf  terraform/stage/main.tf terraform/stage/outputs.tf terraform/stage/backend.tf  terraform/stage/terraform.tfvars
   - ansible-lint ansible/playbooks/site.yml
-  - ansible-lint ansible/playbooks/deploy.yml
