@@ -29,6 +29,6 @@ script:
   - terraform validate -var-file=terraform/prod/terraform.tfvars terraform/prod/
   - terraform init  -backend=false terraform/stage/
   - terraform validate -var-file=terraform/stage/terraform.tfvars terraform/stage/
-  - tflint --var-file=terraform/prod/terraform.tfvars  terraform/prod/variables.tf  terraform/prod/main.tf terraform/prod/outputs.tf terraform/prod/backend.tf  terraform/prod/terraform.tfvars
-  - tflint --var-file=terraform/stage/terraform.tfvars  terraform/stage/variables.tf  terraform/stage/main.tf terraform/stage/outputs.tf terraform/stage/backend.tf  terraform/stage/terraform.tfvars
+  - tflint --var-file=terraform/prod/terraform.tfvars  terraform/prod/*
+  - tflint --var-file=terraform/stage/terraform.tfvars  terraform/stage/*
   - ansible-lint ansible/playbooks/site.yml
