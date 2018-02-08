@@ -1,0 +1,34 @@
+language: bash
+sudo: required
+install:
+  - curl -fSL "https://releases.hashicorp.com/terraform/0.11.3/terraform_0.11.3_linux_amd64.zip" -o terraform.zip
+  - sudo unzip terraform.zip -d /opt/terraform
+  - sudo ln -s /opt/terraform/terraform /usr/bin/terraform
+  - rm -f terraform.zip
+  - wget https://github.com/wata727/tflint/releases/download/v0.5.4/tflint_linux_amd64.zip
+  - unzip tflint_linux_amd64.zip
+  - sudo mkdir -p /usr/local/tflint/bin
+  - export PATH=/usr/local/tflint/bin:$PATH
+  - sudo install tflint /usr/local/tflint/bin
+  - curl -fSL "https://releases.hashicorp.com/packer/1.1.3/packer_1.1.3_linux_amd64.zip" -o packer.zip
+  - sudo unzip packer.zip -d /opt/packer
+  - sudo ln -s /opt/packer/packer /usr/bin/packer
+  - sudo pip install ansible-lint
+  - cp packer/variables.json.example packer/variables.json
+  - cp terraform/prod/terraform.tfvars.example terraform/prod/terraform.tfvars
+  - cp terraform/prod/terraform.tfvars.example terraform/stage/terraform.tfvars
+  - touch /home/travis/.ssh/projectuser.pub
+  - touch /home/travis/.ssh/projectuser
+
+script:
+  - packer validate -var-file=packer/variables.json packer/app.json
+  - packer validate -var-file=packer/variables.json packer/db.json
+  - packer validate -var-file=packer/variables.json packer/immutable.json
+  - packer validate -var-file=packer/variables.json packer/ubuntu16.json
+  - terraform init  -backend=false terraform/prod/
+  - terraform validate -var-file=terraform/prod/terraform.tfvars terraform/prod/
+  - terraform init  -backend=false terraform/stage/
+  - terraform validate -var-file=terraform/stage/terraform.tfvars terraform/stage/
+  - tflint --var-file=terraform/prod/terraform.tfvars  terraform/prod/*
+  - tflint --var-file=terraform/stage/terraform.tfvars  terraform/stage/*
+  - ansible-lint ansible/playbooks/site.yml

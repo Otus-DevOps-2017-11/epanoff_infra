@@ -18,28 +18,28 @@
     "disk_type": "pd-standard",
     "disk_size": "10",
     "tags": "puma-server",
-    "network": "default",
+    "network": "default"
     }
   ],
   "provisioners": [
     {
       "type": "shell",
-      "script": "scripts/install_ruby.sh",
+      "script": "packer/scripts/install_ruby.sh",
       "execute_command": "sudo {{.Path}}"
     },
     {
          "type": "shell",
-         "script": "scripts/install_mongodb.sh",
+         "script": "packer/scripts/install_mongodb.sh",
          "execute_command": "sudo {{.Path}}"
     },
     {
       "type": "file",
-      "source": "files/puma.service",
+      "source": "packer/files/puma.service",
       "destination": "/tmp/puma.service"
     },
     {
          "type": "shell",
-         "script": "scripts/deploy.sh",
+         "script": "packer/scripts/deploy.sh",
          "execute_command": "sudo {{.Path}}"
     }
   ]

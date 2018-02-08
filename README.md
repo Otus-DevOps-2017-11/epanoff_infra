@@ -1,3 +1,35 @@
+[![Build Status](https://travis-ci.org/Otus-DevOps-2017-11/epanoff_infra.svg?branch=master)](https://travis-ci.org/Otus-DevOps-2017-11/epanoff_infra)
+# Homework 12
+ansible
+
+Перенес плейбуки в раздельные роли 
+Описал две среды stash и prod (различиются только в env переменных на данный 
+момент)
+
+Импортировал и применил коммьюнити роль nginx jdauphant.nginx
+
+На каждом этапе проверял работу полным перезапуском окружения.
+
+#*
+В задании 11 изучил gce.py. В этом изменил в ansible.cfg строчку
+ inventory = ./old/gce.py
+Плюс измененил названия в terrarome - вместо reddit-app => app чтоб матчились названия
+
+#**
+Создал .travis.yml файл с проверками. 
+Не смог решить проблему с tflint
+
+Он показывает ошибку
+epanov:epanoff_infra epanov$ tflint --var-file=terraform/prod/terraform.tfvars terraform/prod/main.tf
+Evaluation error: 1:3: unknown variable accessed: var.private_key_path in terraform/prod/main.tf:19
+
+Хотя эта переменная есть.
+epanov:epanoff_infra epanov$ grep private_key_path terraform/prod/terraform.tfvars
+private_key_path = "~/.ssh/appuser"
+epanov:epanoff_infra epanov$
+
+Поэтому билды падают. 
+
 # Homework 11
 
 Создал плейбук ansible/reddit_app_one_play.yml для конфигурации и деплоя приложения
@@ -23,7 +55,8 @@
 Не знай зачем запретили использовать gce.py. Свой аналог писать не хотелось
 поэтому наговнокодил write-only script
 
-echo `echo "{";gcloud compute instances list  | grep -v "STATUS"| awk '{printf "\"%s\"\:\{\"hosts\"\:{ \"%s\" :{\"ansible_host\":\"%s\"}}},", $1, $1, $5 }'| sed s'/.$//';echo "}"`  > inventory.json
+echo `echo "{";gcloud compute instances list  
+| grep -v "STATUS"| awk '{printf "\"%s\"\:\{\"hosts\"\:{ \"%s\" :{\"ansible_host\":\"%s\"}}},", $1, $1, $5 }'| sed s'/.$//';echo "}"`  > inventory.json
 
 Он рабочий. Проверено. Но я бы лучше использовал gce.py чем это поделие. 
 

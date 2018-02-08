@@ -9,3 +9,5 @@ variables.json
 variables.json
 *.retry
 *.pyc
+jdauphant.nginx
+*.log
