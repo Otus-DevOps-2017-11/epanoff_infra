@@ -2,6 +2,6 @@
 - src: jdauphant.nginx
   version: v2.13
 
-- src: https://github.com/bennojoy/nginx
+- src: https://github.com/epanoff/infra-db-ansible
   version: master
-  name: nginx_role
+  name: db
